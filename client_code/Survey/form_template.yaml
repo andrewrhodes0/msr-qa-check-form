@@ -53,55 +53,27 @@ components:
     layout_properties: {grid_position: 'TOSPQO,ZQYZDC'}
   - type: ColumnPanel
     properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
-      wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"ABRJJQ":25,"YLXRWP":20,"JWVLAJ":25,"PAKZMK":5}',
+      wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"JIJRKX":34}',
       spacing_below: small, background: ''}
-    name: column_panel_1
-    layout_properties: {grid_position: 'QPHRXA,KTSCKX'}
+    name: column_panel_2_copy
+    layout_properties:
+      col_widths: {}
+      grid_position: SULAYC,HCKCSJ
     components:
     - type: Label
       properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
-        visible: true, text: Tell us a bit about you., font_size: null, font: '',
-        spacing_above: small, icon_align: left, spacing_below: small, italic: false,
-        background: '', bold: false, underline: false, icon: ''}
-      name: label_5
-      layout_properties: {grid_position: 'WEIVFY,GBJPZF'}
-    - type: Spacer
-      properties: {height: 32}
-      name: spacer_7
-      layout_properties: {grid_position: 'CIKJJP,ABRJJQ'}
-    - type: Label
-      properties: {role: input-prompt, align: right, tooltip: '', border: '', foreground: 'theme:Gray
-          900', visible: true, text: 'Age:', font_size: 18, font: '', spacing_above: small,
+        visible: true, text: 'What''s your name?', font_size: null, font: '', spacing_above: small,
         icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
         underline: false, icon: ''}
-      name: label_6
-      layout_properties: {grid_position: 'CIKJJP,PAKZMK'}
-    - type: DropDown
-      properties:
-        role: null
-        align: full
-        tooltip: ''
-        placeholder: ''
-        border: ''
-        enabled: true
-        foreground: ''
-        items: [under 18, 18 - 24, 25 - 34, 35 - 44, 45 - 54, 55 - 64, over 65]
-        visible: true
-        font_size: null
-        font: ''
-        spacing_above: small
-        spacing_below: small
-        italic: false
-        background: ''
-        bold: false
-        underline: false
-        include_placeholder: true
-      name: age_dropdown
-      layout_properties: {grid_position: 'CIKJJP,YLXRWP'}
-    - type: Spacer
-      properties: {height: 32}
-      name: spacer_6
-      layout_properties: {grid_position: 'CIKJJP,JWVLAJ'}
+      name: label_7_copy
+      layout_properties: {grid_position: 'DBRGKG,TYEZSY'}
+    - type: TextBox
+      properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: '',
+        border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+        font: '', spacing_above: small, type: text, spacing_below: small, italic: false,
+        background: '', bold: false, underline: false}
+      name: text_box_1
+      layout_properties: {grid_position: 'GJZMCT,JIJRKX'}
   - type: ColumnPanel
     properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
       wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"EPMTTI":10,"AXNFJW":50}',
@@ -111,46 +83,30 @@ components:
     components:
     - type: Label
       properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
-        visible: true, text: 'On average, how often would you say you use this software?',
-        font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small,
-        italic: false, background: '', bold: false, underline: false, icon: ''}
+        visible: true, text: 'What shift was the sampled pulled from?', font_size: null,
+        font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+        background: '', bold: false, underline: false, icon: ''}
       name: label_7
-      layout_properties: {grid_position: 'JHPBLZ,PWPDOE'}
+      layout_properties: {grid_position: 'DBRGKG,TYEZSY'}
     - type: Spacer
       properties: {height: 32}
       name: spacer_9
       layout_properties: {grid_position: 'GJZMCT,EPMTTI'}
     - type: RadioButton
       properties: {role: null, selected: false, align: left, tooltip: '', border: '',
-        enabled: true, foreground: 'theme:Gray 900', value: never, visible: true,
-        text: Never, font_size: null, font: '', spacing_above: small, spacing_below: small,
-        italic: false, background: '', bold: false, group_name: radioGroup1, underline: false}
+        enabled: true, foreground: 'theme:Gray 900', value: 1st, visible: true, text: 1st,
+        font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false,
+        background: '', bold: false, group_name: radioGroup1, underline: false}
       name: radio_button_1
       layout_properties: {grid_position: 'GJZMCT,AXNFJW UPHAGZ,SAYECH'}
+      event_bindings: {clicked: radio_button_1_clicked}
     - type: RadioButton
       properties: {role: null, selected: false, align: left, tooltip: '', border: '',
-        enabled: true, foreground: 'theme:Gray 900', value: occasionally, visible: true,
-        text: 'Occasionally, a few times a month', font_size: null, font: '', spacing_above: small,
-        spacing_below: small, italic: false, background: '', bold: false, group_name: radioGroup1,
-        underline: false}
+        enabled: true, foreground: 'theme:Gray 900', value: 2nd, visible: true, text: 2nd,
+        font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false,
+        background: '', bold: false, group_name: radioGroup1, underline: false}
       name: radio_button_2
       layout_properties: {grid_position: 'GJZMCT,AXNFJW EROZYG,DVBOPT'}
-    - type: RadioButton
-      properties: {role: null, selected: false, align: left, tooltip: '', border: '',
-        enabled: true, foreground: 'theme:Gray 900', value: sometimes, visible: true,
-        text: 'Sometimes, once or twice a week', font_size: null, font: '', spacing_above: small,
-        spacing_below: small, italic: false, background: '', bold: false, group_name: radioGroup1,
-        underline: false}
-      name: radio_button_3
-      layout_properties: {grid_position: 'GJZMCT,AXNFJW BPCZUV,KLISDT'}
-    - type: RadioButton
-      properties: {role: null, selected: false, align: left, tooltip: '', border: '',
-        enabled: true, foreground: 'theme:Gray 900', value: often, visible: true,
-        text: 'Often, nearly everyday', font_size: null, font: '', spacing_above: small,
-        spacing_below: small, italic: false, background: '', bold: false, group_name: radioGroup1,
-        underline: false}
-      name: radio_button_4
-      layout_properties: {grid_position: 'GJZMCT,AXNFJW SDSUGG,YIJVXS'}
   - type: ColumnPanel
     properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
       wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"XPHNWY":10,"RNQGOH":50}',
@@ -260,4 +216,22 @@ components:
       italic: false, background: '', bold: false, underline: false, icon: ''}
     name: label_4
     layout_properties: {grid_position: 'SNMNRK,ZPBWDM'}
+- type: Spacer
+  properties: {height: 32}
+  name: spacer_9_copy_2
+  layout_properties:
+    col_widths: {}
+    grid_position: ZEWLLY,PANIHN
+- type: Spacer
+  properties: {height: 32}
+  name: spacer_9_copy
+  layout_properties:
+    col_widths: {}
+    grid_position: WLXVLE,INSUNV
+- type: Spacer
+  properties: {height: 32}
+  name: spacer_9_copy_3
+  layout_properties:
+    col_widths: {}
+    grid_position: EPPBDX,IMKXTN
 is_package: true

@@ -17,7 +17,7 @@ class Survey(SurveyTemplate):
 
   def submit_button_click(self, **event_args):
     """This method is called when the button is clicked"""
-    age = self.age_dropdown.selected_value
+    shift = self.age_dropdown.selected_value
     frequency = self.radio_button_1.get_group_value()
     methods = [box.text for box in self.check_boxes if box.checked == True]
     comments = self.comment_area.text
@@ -30,6 +30,8 @@ class Survey(SurveyTemplate):
 
     
     else: alert("Please fill out required fields")
+
+
       
       
     

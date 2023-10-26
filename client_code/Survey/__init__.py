@@ -12,7 +12,7 @@ class Survey(SurveyTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-    self.check_boxes = [self.check_box_1, self.check_box_2, self.check_box_3, self.check_box_4]
+    self.column_panel_board_1_fb_value.visible = False
 
 
   def submit_button_click(self, **event_args):
@@ -30,3 +30,16 @@ class Survey(SurveyTemplate):
 
     
     else: alert("Please fill out required fields")
+
+  def radio_button_3_copy_12_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_1_fb_value.visible = False
+      pass
+
+  def radio_button_3_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_1_fb_value.visible = True
+      pass
+
+
+

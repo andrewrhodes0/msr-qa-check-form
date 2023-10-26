@@ -30,10 +30,3 @@ class Survey(SurveyTemplate):
 
     
     else: alert("Please fill out required fields")
-
-
-      
-      
-    
-
-

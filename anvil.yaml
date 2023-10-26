@@ -1,4 +1,11 @@
 correct_dependency_ids: {}
+scheduled_tasks:
+- task_name: hello_world
+  time_spec:
+    n: 10
+    every: minute
+    at: {}
+  job_id: SCHGJZPM
 dependencies: []
 services:
 - source: /runtime/services/tables.yml
@@ -18,10 +25,10 @@ services:
 startup: {type: form, module: Form1}
 package_name: MSR_QA_Check_Form
 allow_embedding: false
-name: Clone of MSR QA Check Form
+name: MSR QA 5-piece CUSUM Check Form
 runtime_options: {version: 2, client_version: '3', server_version: python3-sandbox,
   server_spec: null}
-metadata: {logo_img: '', title: MSR QA Check Form}
+metadata: {logo_img: '', title: MSR QA 5-piece Check Form, description: ''}
 startup_form: Form1
 native_deps: {head_html: '<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap"
     rel="stylesheet">'}

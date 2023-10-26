@@ -41,5 +41,10 @@ def get_tables():
   ratings = app_tables.ratings.search()
   return [ages, frequency, methods, ratings]
 
+@anvil.server.callable
+def hello_world():
+    print('hello world')
+    return True
+
 
 

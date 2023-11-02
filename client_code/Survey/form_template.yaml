@@ -354,7 +354,7 @@ components:
           background: '', bold: false, underline: false}
         name: text_box_board_1_fb_value
         layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
-  - name: column_panel_board_2
+  - name: column_panel_board_3
     properties: {}
     type: ColumnPanel
     layout_properties: {grid_position: 'VZPKPJ,WPYJQY'}

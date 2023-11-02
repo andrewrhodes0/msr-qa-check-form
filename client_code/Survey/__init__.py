@@ -31,12 +31,12 @@ class Survey(SurveyTemplate):
     
     else: alert("Please fill out required fields")
 
-  def radio_button_3_copy_12_clicked(self, **event_args):
+  def radio_button_board_1_fractured_no_clicked(self, **event_args):
       """This method is called when this radio button is selected"""
       self.column_panel_board_1_fb_value.visible = False
       pass
 
-  def radio_button_3_clicked(self, **event_args):
+  def radio_button_board_1_fractured_yes_clicked(self, **event_args):
       """This method is called when this radio button is selected"""
       self.column_panel_board_1_fb_value.visible = True
       pass

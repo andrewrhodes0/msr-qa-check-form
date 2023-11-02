@@ -232,129 +232,250 @@ components:
       layout_properties:
         col_widths: {}
         grid_position: HDSHVG,RNQGOH KFZQUV,TAUJZJ
-  - type: ColumnPanel
-    properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
-      wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
-      spacing_below: small, background: ''}
-    name: column_panel_4
-    layout_properties: {grid_position: 'FDIIMP,XJOPUF'}
+  - name: column_panel_board_1
+    properties: {}
+    type: ColumnPanel
+    layout_properties: {grid_position: 'YHQSWB,DXBQDI'}
     components:
-    - type: Label
-      properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
-        visible: true, text: 'Board #1 Moisture Content (%)', font_size: null, font: '',
-        spacing_above: small, icon_align: left, spacing_below: small, italic: false,
-        background: '', bold: false, underline: false, icon: ''}
-      name: label_8
-      layout_properties: {grid_position: 'BUUQFX,IIKFMG'}
-    - type: Spacer
-      properties: {height: 32}
-      name: spacer_11_copy_2
-      layout_properties:
-        col_widths: {}
-        grid_position: OBWCEU,CEJBVS
-    - type: TextBox
-      properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Number must be between 4 ~ 100,
-        border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
-        font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
-        background: '', bold: false, underline: false}
-      name: text_box_board_1_moisture
-      layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
-  - type: ColumnPanel
-    properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
-      wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
-      spacing_below: small, background: ''}
-    name: column_panel_4_copy
-    layout_properties:
-      col_widths: {}
-      grid_position: KCHHNN,LHDZRM
+    - type: ColumnPanel
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+        wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
+        spacing_below: small, background: ''}
+      name: column_panel_4
+      layout_properties: {grid_position: 'YYBBUM,IQTFOP'}
+      components:
+      - type: Label
+        properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
+          visible: true, text: 'Board #1 Moisture Content (%)', font_size: null, font: '',
+          spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false, icon: ''}
+        name: label_8
+        layout_properties: {grid_position: 'BUUQFX,IIKFMG'}
+      - type: Spacer
+        properties: {height: 32}
+        name: spacer_11_copy_2
+        layout_properties:
+          col_widths: {}
+          grid_position: OBWCEU,CEJBVS
+      - type: TextBox
+        properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Number must be between 4 ~ 100,
+          border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+          font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false}
+        name: text_box_board_1_moisture
+        layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
+    - type: ColumnPanel
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+        wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
+        spacing_below: small, background: ''}
+      name: column_panel_4_copy
+      layout_properties: {grid_position: 'VWBYHI,FKZTKR'}
+      components:
+      - type: Label
+        properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
+          visible: true, text: 'Board #1 Average MOE', font_size: null, font: '',
+          spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false, icon: ''}
+        name: label_8_copy
+        layout_properties: {grid_position: 'BUUQFX,IIKFMG'}
+      - type: Spacer
+        properties: {height: 32}
+        name: spacer_11_copy_3
+        layout_properties:
+          col_widths: {}
+          grid_position: OBWCEU,CEJBVS
+      - type: TextBox
+        properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Number must be between 0 ~ 5.5,
+          border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+          font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false}
+        name: text_box_board_1_avg_moe
+        layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
+    - type: ColumnPanel
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+        wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"XPHNWY":10,"RNQGOH":50}',
+        spacing_below: small, background: ''}
+      name: column_panel_board_1_fracture
+      layout_properties: {grid_position: 'KDXZJI,FLFWGE'}
+      components:
+      - type: Label
+        properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
+          visible: true, text: 'Did Board #1 fracture (according to test-bench software)',
+          font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small,
+          italic: false, background: '', bold: false, underline: false, icon: ''}
+        name: label_1_copy_2
+        layout_properties: {grid_position: 'JWJYDX,DNVMNC'}
+      - type: Spacer
+        properties: {height: 32}
+        name: spacer_11_copy_4
+        layout_properties: {grid_position: 'HDSHVG,XPHNWY'}
+      - type: RadioButton
+        properties: {role: null, selected: false, align: left, tooltip: '', border: '',
+          enabled: true, foreground: 'theme:Gray 900', value: 'Yes', visible: true,
+          text: 'Yes', font_size: null, font: '', spacing_above: small, spacing_below: small,
+          italic: false, background: '', bold: false, group_name: radioGroup4, underline: false}
+        name: radio_button_board_1_fractured_yes
+        layout_properties: {grid_position: 'HDSHVG,RNQGOH QXDEEU,PRAVBU'}
+        event_bindings: {clicked: radio_button_board_1_fractured_yes_clicked}
+      - type: RadioButton
+        properties: {role: null, selected: false, align: left, tooltip: '', border: '',
+          enabled: true, foreground: 'theme:Gray 900', value: 'No', visible: true,
+          text: 'No', font_size: null, font: '', spacing_above: small, spacing_below: small,
+          italic: false, background: '', bold: false, group_name: radioGroup4, underline: false}
+        name: radio_button_board_1_fractured_no
+        layout_properties:
+          col_widths: {}
+          grid_position: HDSHVG,RNQGOH DVADAU,HXVRZD
+        event_bindings: {clicked: radio_button_board_1_fractured_no_clicked}
+    - type: ColumnPanel
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+        wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
+        spacing_below: small, background: ''}
+      name: column_panel_board_1_fb_value
+      layout_properties: {grid_position: 'APFKGS,NZCVWW'}
+      components:
+      - type: Label
+        properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
+          visible: true, text: 'Board #1 end-of-test Fb value (after fracture)', font_size: null,
+          font: '', spacing_above: small, icon_align: left, spacing_below: small,
+          italic: false, background: '', bold: false, underline: false, icon: ''}
+        name: label_8_copy_2
+        layout_properties: {grid_position: 'BUUQFX,IIKFMG'}
+      - type: Spacer
+        properties: {height: 32}
+        name: spacer_11_copy_5
+        layout_properties:
+          col_widths: {}
+          grid_position: OBWCEU,CEJBVS
+      - type: TextBox
+        properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Number must be between 0 ~ 2399,
+          border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+          font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false}
+        name: text_box_board_1_fb_value
+        layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
+  - name: column_panel_board_2
+    properties: {}
+    type: ColumnPanel
+    layout_properties: {grid_position: 'VZPKPJ,WPYJQY'}
     components:
-    - type: Label
-      properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
-        visible: true, text: 'Board #1 Average MOE', font_size: null, font: '', spacing_above: small,
-        icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
-        underline: false, icon: ''}
-      name: label_8_copy
-      layout_properties: {grid_position: 'BUUQFX,IIKFMG'}
-    - type: Spacer
-      properties: {height: 32}
-      name: spacer_11_copy_3
-      layout_properties:
-        col_widths: {}
-        grid_position: OBWCEU,CEJBVS
-    - type: TextBox
-      properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Number must be between 0 ~ 5.5,
-        border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
-        font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
-        background: '', bold: false, underline: false}
-      name: text_box_board_1_avg_moe
-      layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
-  - type: ColumnPanel
-    properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
-      wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"XPHNWY":10,"RNQGOH":50}',
-      spacing_below: small, background: ''}
-    name: column_panel_3_copy_2
-    layout_properties:
-      col_widths: {}
-      grid_position: LCZRYX,NWTKBN
-    components:
-    - type: Label
-      properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
-        visible: true, text: 'Did Board #1 fracture (according to test-bench software)',
-        font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small,
-        italic: false, background: '', bold: false, underline: false, icon: ''}
-      name: label_1_copy_2
-      layout_properties: {grid_position: 'JWJYDX,DNVMNC'}
-    - type: Spacer
-      properties: {height: 32}
-      name: spacer_11_copy_4
-      layout_properties: {grid_position: 'HDSHVG,XPHNWY'}
-    - type: RadioButton
-      properties: {role: null, selected: false, align: left, tooltip: '', border: '',
-        enabled: true, foreground: 'theme:Gray 900', value: 'Yes', visible: true,
-        text: 'Yes', font_size: null, font: '', spacing_above: small, spacing_below: small,
-        italic: false, background: '', bold: false, group_name: radioGroup4, underline: false}
-      name: radio_button_board_1_fractured_yes
-      layout_properties: {grid_position: 'HDSHVG,RNQGOH QXDEEU,PRAVBU'}
-      event_bindings: {clicked: radio_button_3_clicked}
-    - type: RadioButton
-      properties: {role: null, selected: false, align: left, tooltip: '', border: '',
-        enabled: true, foreground: 'theme:Gray 900', value: 'No', visible: true, text: 'No',
-        font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false,
-        background: '', bold: false, group_name: radioGroup4, underline: false}
-      name: radio_button_board_1_fractured_no
-      layout_properties:
-        col_widths: {}
-        grid_position: HDSHVG,RNQGOH DVADAU,HXVRZD
-      event_bindings: {clicked: radio_button_3_copy_12_clicked}
-  - type: ColumnPanel
-    properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
-      wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
-      spacing_below: small, background: ''}
-    name: column_panel_board_1_fb_value
-    layout_properties:
-      col_widths: {}
-      grid_position: NLGEPZ,BWTRZS
-    components:
-    - type: Label
-      properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
-        visible: true, text: 'Board #1 end-of-test Fb value (after fracture)', font_size: null,
-        font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
-        background: '', bold: false, underline: false, icon: ''}
-      name: label_8_copy_2
-      layout_properties: {grid_position: 'BUUQFX,IIKFMG'}
-    - type: Spacer
-      properties: {height: 32}
-      name: spacer_11_copy_5
-      layout_properties:
-        col_widths: {}
-        grid_position: OBWCEU,CEJBVS
-    - type: TextBox
-      properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Number must be between 0 ~ 2399,
-        border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
-        font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
-        background: '', bold: false, underline: false}
-      name: text_box_board_1_fb_value
-      layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
+    - name: column_panel_board_2_moisture
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+        wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
+        spacing_below: small, background: ''}
+      type: ColumnPanel
+      layout_properties: {grid_position: 'YYBBUM,IQTFOP'}
+      components:
+      - name: label_board_2_moisture
+        properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
+          visible: true, text: 'Board #2 Moisture Content (%)', font_size: null, font: '',
+          spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false, icon: ''}
+        type: Label
+        layout_properties: {grid_position: 'BUUQFX,IIKFMG'}
+      - name: spacer_11_copy_2_copy_1
+        properties: {height: 32}
+        type: Spacer
+        layout_properties:
+          col_widths: {}
+          grid_position: OBWCEU,CEJBVS
+      - name: text_box_board_2_moisture
+        properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Number must be between 4 ~ 100,
+          border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+          font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false}
+        type: TextBox
+        layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
+    - name: column_panel_board_2_moe
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+        wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
+        spacing_below: small, background: ''}
+      type: ColumnPanel
+      layout_properties: {grid_position: 'VWBYHI,FKZTKR'}
+      components:
+      - name: label_board_2_moe
+        properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
+          visible: true, text: 'Board #2 Average MOE', font_size: null, font: '',
+          spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false, icon: ''}
+        type: Label
+        layout_properties: {grid_position: 'BUUQFX,IIKFMG'}
+      - name: spacer_11_copy_3_copy_1
+        properties: {height: 32}
+        type: Spacer
+        layout_properties:
+          col_widths: {}
+          grid_position: OBWCEU,CEJBVS
+      - name: text_box_board_2_avg_moe
+        properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Number must be between 0 ~ 5.5,
+          border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+          font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false}
+        type: TextBox
+        layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
+    - name: column_panel_board_2_fracture
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+        wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"XPHNWY":10,"RNQGOH":50}',
+        spacing_below: small, background: ''}
+      type: ColumnPanel
+      layout_properties: {grid_position: 'KDXZJI,FLFWGE'}
+      components:
+      - name: label_board_2_fracture
+        properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
+          visible: true, text: 'Did Board #2 fracture (according to test-bench software)',
+          font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small,
+          italic: false, background: '', bold: false, underline: false, icon: ''}
+        type: Label
+        layout_properties: {grid_position: 'JWJYDX,DNVMNC'}
+      - name: spacer_11_copy_4_copy_1
+        properties: {height: 32}
+        type: Spacer
+        layout_properties: {grid_position: 'HDSHVG,XPHNWY'}
+      - name: radio_button_board_2_fractured_yes
+        properties: {role: null, selected: false, align: left, tooltip: '', border: '',
+          enabled: true, foreground: 'theme:Gray 900', value: 'Yes', visible: true,
+          text: 'Yes', font_size: null, font: '', spacing_above: small, spacing_below: small,
+          italic: false, background: '', bold: false, group_name: radioGroup4, underline: false}
+        type: RadioButton
+        layout_properties: {grid_position: 'HDSHVG,RNQGOH QXDEEU,PRAVBU'}
+        event_bindings: {clicked: radio_button_board_1_fractured_yes_clicked}
+      - name: radio_button_board_2_fractured_no
+        properties: {role: null, selected: false, align: left, tooltip: '', border: '',
+          enabled: true, foreground: 'theme:Gray 900', value: 'No', visible: true,
+          text: 'No', font_size: null, font: '', spacing_above: small, spacing_below: small,
+          italic: false, background: '', bold: false, group_name: radioGroup4, underline: false}
+        type: RadioButton
+        layout_properties:
+          col_widths: {}
+          grid_position: HDSHVG,RNQGOH DVADAU,HXVRZD
+        event_bindings: {clicked: radio_button_board_1_fractured_no_clicked}
+    - name: column_panel_board_2_fb_value
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+        wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
+        spacing_below: small, background: ''}
+      type: ColumnPanel
+      layout_properties: {grid_position: 'APFKGS,NZCVWW'}
+      components:
+      - name: label_board_2_fb_value
+        properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
+          visible: true, text: 'Board #2 end-of-test Fb value (after fracture)', font_size: null,
+          font: '', spacing_above: small, icon_align: left, spacing_below: small,
+          italic: false, background: '', bold: false, underline: false, icon: ''}
+        type: Label
+        layout_properties: {grid_position: 'BUUQFX,IIKFMG'}
+      - name: spacer_11_copy_5_copy_1
+        properties: {height: 32}
+        type: Spacer
+        layout_properties:
+          col_widths: {}
+          grid_position: OBWCEU,CEJBVS
+      - name: text_box_board_2_fb_value
+        properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Number must be between 0 ~ 2399,
+          border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+          font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
+          background: '', bold: false, underline: false}
+        type: TextBox
+        layout_properties: {grid_position: 'OBWCEU,EJNRIQ'}
   - type: ColumnPanel
     properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
       wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{}',
@@ -364,9 +485,9 @@ components:
     components:
     - type: Label
       properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
-        visible: true, text: 'Do you have any additional comments?', font_size: null,
-        font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
-        background: '', bold: false, underline: false, icon: ''}
+        visible: true, text: Notes, font_size: null, font: '', spacing_above: small,
+        icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+        underline: false, icon: ''}
       name: label_9
       layout_properties: {grid_position: 'AXGMOO,XOUXXR'}
     - type: TextArea

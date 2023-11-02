@@ -878,8 +878,8 @@ components:
     name: spacer_3
   - type: Label
     properties: {role: null, align: center, tooltip: '', border: '', foreground: 'theme:Gray
-        900', visible: true, text: Thank you for participating. Your feedback will be used to improve our products and services.,
-      font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small,
-      italic: false, background: '', bold: false, underline: false, icon: ''}
+        900', visible: true, text: '...', font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
     layout_properties: {grid_position: 'SNMNRK,ZPBWDM'}
     name: label_4

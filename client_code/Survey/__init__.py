@@ -12,7 +12,6 @@ class Survey(SurveyTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-    self.column_panel_board_1_fb_value.visible = False
 
 
   def submit_button_click(self, **event_args):
@@ -41,5 +40,42 @@ class Survey(SurveyTemplate):
       self.column_panel_board_1_fb_value.visible = True
       pass
 
+  def radio_button_board_2_fractured_no_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_2_fb_value.visible = False
+      pass
 
+  def radio_button_board_2_fractured_yes_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_2_fb_value.visible = True
+      pass
 
+  def radio_button_board_3_fractured_no_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_3_fb_value.visible = False
+      pass
+
+  def radio_button_board_3_fractured_yes_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_3_fb_value.visible = True
+      pass
+
+  def radio_button_board_4_fractured_no_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_4_fb_value.visible = False
+      pass
+
+  def radio_button_board_4_fractured_yes_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_4_fb_value.visible = True
+      pass
+
+  def radio_button_board_5_fractured_no_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_5_fb_value.visible = False
+      pass
+
+  def radio_button_board_5_fractured_yes_clicked(self, **event_args):
+      """This method is called when this radio button is selected"""
+      self.column_panel_board_5_fb_value.visible = True
+      pass

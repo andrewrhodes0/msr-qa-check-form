@@ -59,7 +59,7 @@ components:
     layout_properties:
       col_widths: {}
       grid_position: SULAYC,HCKCSJ
-    name: column_panel_2_copy
+    name: column_panel_qa_name
     components:
     - type: Label
       properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
@@ -67,7 +67,7 @@ components:
         icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
         underline: false, icon: ''}
       layout_properties: {grid_position: 'DBRGKG,TYEZSY'}
-      name: label_7_copy
+      name: label_qa_name
     - type: Spacer
       properties: {height: 32}
       layout_properties:
@@ -80,7 +80,7 @@ components:
         font: '', spacing_above: small, type: text, spacing_below: small, italic: false,
         background: '', bold: false, underline: false}
       layout_properties: {grid_position: 'GJZMCT,JIJRKX'}
-      name: text_box_1
+      name: text_box_qa_name
   - type: ColumnPanel
     properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
       wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"EPMTTI":10,"AXNFJW":50}',
@@ -329,7 +329,7 @@ components:
         event_bindings: {clicked: radio_button_board_1_fractured_no_clicked}
         name: radio_button_board_1_fractured_no
     - type: ColumnPanel
-      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: false,
         wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
         spacing_below: small, background: ''}
       layout_properties: {grid_position: 'APFKGS,NZCVWW'}
@@ -438,7 +438,7 @@ components:
           italic: false, background: '', bold: false, group_name: radioGroup4, underline: false}
         type: RadioButton
         layout_properties: {grid_position: 'HDSHVG,RNQGOH QXDEEU,PRAVBU'}
-        event_bindings: {clicked: radio_button_board_1_fractured_yes_clicked}
+        event_bindings: {clicked: radio_button_board_2_fractured_yes_clicked}
         name: radio_button_board_2_fractured_yes
       - properties: {role: null, selected: false, align: left, tooltip: '', border: '',
           enabled: true, foreground: 'theme:Gray 900', value: 'No', visible: true,
@@ -448,7 +448,7 @@ components:
         layout_properties:
           col_widths: {}
           grid_position: HDSHVG,RNQGOH DVADAU,HXVRZD
-        event_bindings: {clicked: radio_button_board_1_fractured_no_clicked}
+        event_bindings: {clicked: radio_button_board_2_fractured_no_clicked}
         name: radio_button_board_2_fractured_no
     - properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
         wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
@@ -560,7 +560,7 @@ components:
           italic: false, background: '', bold: false, group_name: radioGroup4, underline: false}
         type: RadioButton
         layout_properties: {grid_position: 'HDSHVG,RNQGOH QXDEEU,PRAVBU'}
-        event_bindings: {clicked: radio_button_board_1_fractured_yes_clicked}
+        event_bindings: {clicked: radio_button_board_3_fractured_yes_clicked}
         name: radio_button_board_3_fractured_yes
       - properties: {role: null, selected: false, align: left, tooltip: '', border: '',
           enabled: true, foreground: 'theme:Gray 900', value: 'No', visible: true,
@@ -570,9 +570,9 @@ components:
         layout_properties:
           col_widths: {}
           grid_position: HDSHVG,RNQGOH DVADAU,HXVRZD
-        event_bindings: {clicked: radio_button_board_1_fractured_no_clicked}
+        event_bindings: {clicked: radio_button_board_3_fractured_no_clicked}
         name: radio_button_board_3_fractured_no
-    - properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+    - properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: false,
         wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
         spacing_below: small, background: ''}
       type: ColumnPanel
@@ -682,7 +682,7 @@ components:
           italic: false, background: '', bold: false, group_name: radioGroup4, underline: false}
         type: RadioButton
         layout_properties: {grid_position: 'HDSHVG,RNQGOH QXDEEU,PRAVBU'}
-        event_bindings: {clicked: radio_button_board_1_fractured_yes_clicked}
+        event_bindings: {clicked: radio_button_board_4_fractured_yes_clicked}
         name: radio_button_board_4_fractured_yes
       - properties: {role: null, selected: false, align: left, tooltip: '', border: '',
           enabled: true, foreground: 'theme:Gray 900', value: 'No', visible: true,
@@ -692,9 +692,9 @@ components:
         layout_properties:
           col_widths: {}
           grid_position: HDSHVG,RNQGOH DVADAU,HXVRZD
-        event_bindings: {clicked: radio_button_board_1_fractured_no_clicked}
+        event_bindings: {clicked: radio_button_board_4_fractured_no_clicked}
         name: radio_button_board_4_fractured_no
-    - properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+    - properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: false,
         wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
         spacing_below: small, background: ''}
       type: ColumnPanel
@@ -805,7 +805,7 @@ components:
           italic: false, background: '', bold: false, group_name: radioGroup4, underline: false}
         type: RadioButton
         layout_properties: {grid_position: 'HDSHVG,RNQGOH QXDEEU,PRAVBU'}
-        event_bindings: {clicked: radio_button_board_1_fractured_yes_clicked}
+        event_bindings: {clicked: radio_button_board_5_fractured_yes_clicked}
       - name: radio_button_board_5_fractured_no
         properties: {role: null, selected: false, align: left, tooltip: '', border: '',
           enabled: true, foreground: 'theme:Gray 900', value: 'No', visible: true,
@@ -815,9 +815,9 @@ components:
         layout_properties:
           col_widths: {}
           grid_position: HDSHVG,RNQGOH DVADAU,HXVRZD
-        event_bindings: {clicked: radio_button_board_1_fractured_no_clicked}
+        event_bindings: {clicked: radio_button_board_5_fractured_no_clicked}
     - name: column_panel_board_5_fb_value
-      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+      properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: false,
         wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"CEJBVS":10,"EJNRIQ":50}',
         spacing_below: small, background: ''}
       type: ColumnPanel

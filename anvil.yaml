@@ -27,32 +27,6 @@ startup_form: Form1
 native_deps: {head_html: '<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap"
     rel="stylesheet">'}
 db_schema:
-  users:
-    title: Users
-    client: none
-    server: full
-    columns:
-    - name: email
-      admin_ui: {width: 200}
-      type: string
-    - name: enabled
-      admin_ui: {width: 100}
-      type: bool
-    - name: n_password_failures
-      admin_ui: {width: 200}
-      type: number
-    - name: last_login
-      admin_ui: {width: 200}
-      type: datetime
-    - name: remembered_logins
-      admin_ui: {width: 200}
-      type: simpleObject
-    - name: password_hash
-      admin_ui: {width: 200}
-      type: string
-    - name: signed_up
-      admin_ui: {order: 6, width: 200}
-      type: datetime
   age:
     title: Age
     client: search
@@ -88,8 +62,8 @@ db_schema:
     - name: comments
       admin_ui: {width: 200}
       type: string
-  frequency:
-    title: Frequency
+  method:
+    title: Method
     client: none
     server: full
     columns:
@@ -99,6 +73,81 @@ db_schema:
     - name: num_responses
       admin_ui: {width: 200}
       type: number
+  product_size:
+    client: none
+    server: full
+    columns:
+    - name: option
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: num_checks
+      admin_ui: {width: 200, order: 1}
+      type: number
+    title: Product_size
+  users:
+    title: Users
+    client: none
+    server: full
+    columns:
+    - name: email
+      admin_ui: {width: 200}
+      type: string
+    - name: enabled
+      admin_ui: {width: 100}
+      type: bool
+    - name: n_password_failures
+      admin_ui: {width: 200}
+      type: number
+    - name: last_login
+      admin_ui: {width: 200}
+      type: datetime
+    - name: remembered_logins
+      admin_ui: {width: 200}
+      type: simpleObject
+    - name: password_hash
+      admin_ui: {width: 200}
+      type: string
+    - name: signed_up
+      admin_ui: {order: 6, width: 200}
+      type: datetime
+  shift:
+    client: none
+    server: full
+    columns:
+    - name: option
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: num_checks
+      admin_ui: {width: 200, order: 1}
+      type: number
+    title: shift
+  msr_checks:
+    client: none
+    server: full
+    columns:
+    - name: qa_name
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: shift
+      admin_ui: {width: 200, order: 1}
+      type: link_single
+      target: shift
+    - name: product_size
+      admin_ui: {width: 200, order: 2}
+      type: link_single
+      target: product_size
+    title: msr_checks
+  length:
+    client: none
+    server: full
+    columns:
+    - name: option
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: num_checks
+      admin_ui: {width: 200, order: 1}
+      type: number
+    title: Length
   ratings:
     title: Ratings
     client: search
@@ -110,8 +159,8 @@ db_schema:
     - name: num_responses
       admin_ui: {width: 200}
       type: number
-  method:
-    title: Method
+  frequency:
+    title: Frequency
     client: none
     server: full
     columns:

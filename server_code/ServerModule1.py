@@ -41,17 +41,14 @@ def add_msr_check(
     board_5_fb_value,
     comments,
 ):
-    shift_row = app_tables.shifts.get(option=shift)  # Assuming 'shifts' is the table name and 'option' is the column name
-    if shift_row:
-        shift_row['num_checks'] = (shift_row['num_checks'] or 0) + 1
+    shift_row = app_tables.shift.get(option=shift)  # Assuming 'shift' is the table name and 'option' is the column name
+    shift_row['num_checks'] = (shift_row['num_checks'] or 0) + 1
 
-    product_size_row = app_tables.product_sizes.get(option=product_size)  # Adjust the table and column name accordingly
-    if product_size_row:
-        product_size_row['num_checks'] = (product_size_row['num_checks'] or 0) + 1
+    product_size_row = app_tables.product_size.get(option=product_size)  # Adjust the table and column name accordingly
+    product_size_row['num_checks'] = (product_size_row['num_checks'] or 0) + 1
 
-    length_row = app_tables.lengths.get(option=length)  # Adjust the table and column name accordingly
-    if length_row:
-        length_row['num_checks'] = (length_row['num_checks'] or 0) + 1
+    length_row = app_tables.length.get(option=length)  # Adjust the table and column name accordingly
+    length_row['num_checks'] = (length_row['num_checks'] or 0) + 1
         
     app_tables.msr_checks.add_row(
         qa_name=qa_name,
@@ -79,6 +76,7 @@ def add_msr_check(
         board_5_fractured=board_5_fractured,
         board_5_fb_value=board_5_fb_value,
         comments=comments
+    )
 
 
 @anvil.server.callable

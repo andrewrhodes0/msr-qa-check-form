@@ -24,8 +24,8 @@ class Report(ReportTemplate):
     plot_list = [self.age_plot, self.freq_plot, self.method_plot, self.rating_plot]
     
     for table, plot in zip(table_list, plot_list):
-      plot.data = [go.Bar(x=[row['options'] for row in table],
-                     y=[row['num_responses'] for row in table],
+      plot.data = [go.Bar(x=[row['option'] for row in table],
+                     y=[row['num_checks'] for row in table],
                      marker=dict(color='#FCA352'))]
       plot.layout = {'plot_bgcolor':'#E0E0E0', 'paper_bgcolor':'#E0E0E0'}
     

@@ -44,14 +44,14 @@ class Survey(SurveyTemplate):
         check_meta_data_ok = all([qa_name, shift, product_size, length])
         check_board_data_ok = all([all(board.values()) for board in board_data])
         
-        if True: #check_meta_data_ok and check_board_data_ok:
+pass        if check_meta_data_ok and check_board_data_ok:
             # Call the server function
             anvil.server.call('add_msr_check', qa_name, shift, product_size, length, board_data, comments)
-            alert("Thank you for your hard work!")
-            get_open_form().content_panel.clear()
-            get_open_form().content_panel.add_component(Survey(), full_width_row=True)
-            document.body.scrollTop = 0  # For Safari
-            document.documentElement.scrollTop = 0  # For Chrome, Firefox, IE and Opera
+            open_form('FormSubmitted')
+            #get_open_form().content_panel.clear()
+            #get_open_form().content_panel.add_component(Survey(), full_width_row=True)
+            #document.body.scrollTop = 0  # For Safari
+            #document.documentElement.scrollTop = 0  # For Chrome, Firefox, IE and Opera
         else: alert("Please fill out required fields")
 
 

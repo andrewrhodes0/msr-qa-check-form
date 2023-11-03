@@ -1,0 +1,32 @@
+is_package: true
+container:
+  type: HtmlTemplate
+  properties: {html: '@theme:standard-page.html'}
+components:
+- type: ColumnPanel
+  properties: {}
+  name: content_panel
+  layout_properties: {slot: default}
+  components:
+  - name: column_panel_qa_name_copy_1
+    properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
+      wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"JIMFJN":14}',
+      spacing_below: small, background: ''}
+    type: ColumnPanel
+    layout_properties: {grid_position: 'GWEENM,FHOWFU'}
+    components:
+    - name: label_msr_check_submitted
+      properties: {role: subheading, align: center, tooltip: '', border: '', foreground: '',
+        visible: true, text: MSR Check Submitted, font_size: null, font: '', spacing_above: small,
+        icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+        underline: false, icon: ''}
+      type: Label
+      layout_properties: {grid_position: 'DBRGKG,TYEZSY'}
+    - name: button_1
+      properties: {text: Return}
+      type: Button
+      layout_properties: {grid_position: 'GBLBXZ,YGRZIU'}
+- type: FlowPanel
+  properties: {}
+  name: navbar_links
+  layout_properties: {slot: nav-right}

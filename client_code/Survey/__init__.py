@@ -43,8 +43,7 @@ class Survey(SurveyTemplate):
         # Check if all data is okay to send
         check_meta_data_ok = all([qa_name, shift, product_size, length])
         check_board_data_ok = all([all(board.values()) for board in board_data])
-        
-pass        if check_meta_data_ok and check_board_data_ok:
+        if check_meta_data_ok and check_board_data_ok:
             # Call the server function
             anvil.server.call('add_msr_check', qa_name, shift, product_size, length, board_data, comments)
             open_form('FormSubmitted')

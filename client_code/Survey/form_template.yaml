@@ -107,7 +107,7 @@ components:
         font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false,
         background: '', bold: false, group_name: radioGroupShift, underline: false}
       layout_properties: {grid_position: 'GJZMCT,AXNFJW UPHAGZ,SAYECH'}
-      event_bindings: {clicked: radio_button_1_clicked}
+      event_bindings: {}
       name: radio_button_shift_first
     - type: RadioButton
       properties: {role: null, selected: false, align: left, tooltip: '', border: '',
@@ -140,8 +140,8 @@ components:
         font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false,
         background: '', bold: false, group_name: radioGroupSize, underline: false}
       layout_properties: {grid_position: 'HDSHVG,RNQGOH QXDEEU,PRAVBU'}
-      event_bindings: {clicked: radio_button_3_clicked}
-      name: radio_2x4_product_size
+      event_bindings: {}
+      name: radio_button_2x4_product_size
     - type: RadioButton
       properties: {role: null, selected: false, align: left, tooltip: '', border: '',
         enabled: true, foreground: 'theme:Gray 900', value: 2x6, visible: true, text: 2x6,
@@ -150,7 +150,7 @@ components:
       layout_properties:
         col_widths: {}
         grid_position: HDSHVG,RNQGOH DVADAU,HXVRZD
-      name: radio_2x6_product_size
+      name: radio_button_2x6_product_size
     - type: RadioButton
       properties: {role: null, selected: false, align: left, tooltip: '', border: '',
         enabled: true, foreground: 'theme:Gray 900', value: 2x8, visible: true, text: 2x8,
@@ -159,7 +159,7 @@ components:
       layout_properties:
         col_widths: {}
         grid_position: HDSHVG,RNQGOH KHKHTI,OCOVIJ
-      name: radio_2x8_product_size
+      name: radio_button_2x8_product_size
     - type: RadioButton
       properties: {role: null, selected: false, align: left, tooltip: '', border: '',
         enabled: true, foreground: 'theme:Gray 900', value: 2x10, visible: true, text: 2x10,
@@ -168,7 +168,7 @@ components:
       layout_properties:
         col_widths: {}
         grid_position: HDSHVG,RNQGOH KFZQUV,CMVHXT
-      name: radio_2x10_product_size
+      name: radio_button_2x10_product_size
   - type: ColumnPanel
     properties: {role: question-box, tooltip: '', border: '', foreground: '', visible: true,
       wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"XPHNWY":10,"RNQGOH":50}',
@@ -195,7 +195,7 @@ components:
         font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false,
         background: '', bold: false, group_name: radioGroupLength, underline: false}
       layout_properties: {grid_position: 'HDSHVG,RNQGOH QXDEEU,PRAVBU'}
-      event_bindings: {clicked: radio_button_3_clicked}
+      event_bindings: {}
       name: radio_button_16ft_length
     - type: RadioButton
       properties: {role: null, selected: false, align: left, tooltip: '', border: '',

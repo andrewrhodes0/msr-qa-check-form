@@ -59,6 +59,16 @@ def add_msr_check(qa_name, shift, product_size, length, board_data, comments):
     return check_entry
 
 @anvil.server.callable
+def add_piece_to_history(
+    period_start,
+    period_end,
+    product_size,
+    piece_count
+):
+    product_size_row = app_tables.product_size.get(option=product_size)
+    app_tables.msr_lumber_production_history.add_row(period_start=period_start, period_end=period_end, product_size=product_size_row, piece_count=piece_count)
+
+@anvil.server.callable
 def get_total_responses():
     return len(app_tables.msr_checks.search())
 

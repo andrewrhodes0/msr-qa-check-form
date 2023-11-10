@@ -149,4 +149,23 @@ db_schema:
     - name: fb_value
       admin_ui: {width: 200}
       type: number
+  msr_lumber_production_history:
+    title: msr_lumber_production_history
+    client: none
+    server: full
+    columns:
+    - name: period_start
+      admin_ui: {width: 200}
+      type: datetime
+    - name: period_end
+      admin_ui: {width: 200}
+      type: datetime
+    - name: product_size
+      admin_ui: {width: 200}
+      type: link_single
+      target: product_size
+    - name: piece_count
+      admin_ui: {width: 200}
+      type: number
+uplink_visible: true
 renamed: true

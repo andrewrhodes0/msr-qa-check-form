@@ -60,13 +60,11 @@ def add_msr_check(qa_name, shift, product_size, length, board_data, comments):
 
 @anvil.server.callable
 def add_piece_to_history(
-    minute_offset,
+    period_start,
+    period_end,
     product_size,
     piece_count
 ):
-    time_offset = datetime.timedelta(minutes=minute_offset)
-    period_end = datetime.datetime.now() + time_offset
-    period_start = period_end - datetime.timedelta(minutes=1) + time_offset
     product_size_row = app_tables.product_size.get(option=product_size)
     app_tables.msr_lumber_production_history.add_row(period_start=period_start, period_end=period_end, product_size=product_size_row, piece_count=piece_count)
 

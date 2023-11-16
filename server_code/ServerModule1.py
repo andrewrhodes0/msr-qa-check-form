@@ -15,6 +15,34 @@ def check_admin():
 
 @anvil.server.callable
 @anvil.tables.in_transaction
+def add_msr_calibration_entry(completion_time, calibration_type, moe, outcome, shift, name):
+    # Add a new calibration entry to the `msr_calibrations` table
+    
+    calibration_type_row = app_tables.calibration_type.get(option=calibration_type)
+    if not calibration_type_row:
+        # Optionally, create a new calibration type row if it doesn't exist
+        calibration_type_row = app_tables.calibration_type.add_row(option=calibration_type)
+
+    # Update the number of calibrations for this type
+    calibration_type_row['num_calibrations'] = (calibration_type_row['num_calibrations'] or 0) + 1
+
+    shift_row = app_tables.shift.get(option=shift)
+
+    # Add the calibration entry with a reference to the calibration_type_row
+    calibration_entry = app_tables.msr_calibrations.add_row(
+        completion_time=completion_time,
+        shift=shift_row,
+        calibration_type=calibration_type_row,
+        moe=moe,
+        outcome_pass=(outcome=='Pass'),
+        name=name
+    )
+
+    return calibration_entry
+
+
+@anvil.server.callable
+@anvil.tables.in_transaction
 def add_msr_check(qa_name, shift, product_size, length, board_data, comments, timestamp=None):
     # First, add board details to the `boards` table
     board_entries = []

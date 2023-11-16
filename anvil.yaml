@@ -27,6 +27,45 @@ startup_form: Form1
 native_deps: {head_html: '<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap"
     rel="stylesheet">'}
 db_schema:
+  calibration_type:
+    client: none
+    server: full
+    columns:
+    - name: option
+      admin_ui: {order: 0, width: 433}
+      type: string
+    - name: num_calibrations
+      admin_ui: {width: 200, order: 1}
+      type: number
+    title: Calibration_Type
+  boards:
+    title: Boards
+    client: none
+    server: full
+    columns:
+    - name: moisture
+      admin_ui: {width: 200}
+      type: number
+    - name: moe
+      admin_ui: {width: 200}
+      type: number
+    - name: fractured
+      admin_ui: {width: 200}
+      type: bool
+    - name: fb_value
+      admin_ui: {width: 200}
+      type: number
+  product_size:
+    client: none
+    server: full
+    columns:
+    - name: option
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: num_checks
+      admin_ui: {width: 200, order: 1}
+      type: number
+    title: Product_Size
   users:
     title: Users
     client: none
@@ -53,6 +92,17 @@ db_schema:
     - name: signed_up
       admin_ui: {order: 6, width: 200}
       type: datetime
+  shift:
+    client: none
+    server: full
+    columns:
+    - name: option
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: num_checks
+      admin_ui: {width: 200, order: 1}
+      type: number
+    title: Shift
   msr_checks:
     client: none
     server: full
@@ -99,28 +149,31 @@ db_schema:
       type: link_single
       target: length
     title: MSR_Checks
-  shift:
+  msr_calibrations:
     client: none
     server: full
     columns:
-    - name: option
+    - name: completion_time
       admin_ui: {width: 200, order: 0}
-      type: string
-    - name: num_checks
-      admin_ui: {width: 200, order: 1}
+      type: datetime
+    - name: calibration_type
+      admin_ui: {order: 1, width: 473}
+      type: link_single
+      target: calibration_type
+    - name: moe
+      admin_ui: {width: 200, order: 2}
       type: number
-    title: Shift
-  product_size:
-    client: none
-    server: full
-    columns:
-    - name: option
-      admin_ui: {width: 200, order: 0}
+    - name: outcome_pass
+      admin_ui: {width: 200, order: 3}
+      type: bool
+    - name: shift
+      admin_ui: {order: 0.5, width: 200}
+      type: link_single
+      target: shift
+    - name: name
+      admin_ui: {width: 200, order: 4}
       type: string
-    - name: num_checks
-      admin_ui: {width: 200, order: 1}
-      type: number
-    title: Product_Size
+    title: MSR_Calibrations
   length:
     client: none
     server: full
@@ -132,23 +185,6 @@ db_schema:
       admin_ui: {width: 200, order: 1}
       type: number
     title: Length
-  boards:
-    title: Boards
-    client: none
-    server: full
-    columns:
-    - name: moisture
-      admin_ui: {width: 200}
-      type: number
-    - name: moe
-      admin_ui: {width: 200}
-      type: number
-    - name: fractured
-      admin_ui: {width: 200}
-      type: bool
-    - name: fb_value
-      admin_ui: {width: 200}
-      type: number
   msr_lumber_production_history:
     title: msr_lumber_production_history
     client: none

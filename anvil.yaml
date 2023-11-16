@@ -103,6 +103,19 @@ db_schema:
       admin_ui: {width: 200, order: 1}
       type: number
     title: Shift
+  msr_control_status:
+    client: none
+    server: full
+    columns:
+    - name: latest_msr_check_considered
+      admin_ui: {width: 200, order: 0}
+      type: link_single
+      target: msr_checks
+    - name: product_size
+      admin_ui: {width: 200, order: -1}
+      type: link_single
+      target: product_size
+    title: MSR_Control_Status
   msr_checks:
     client: none
     server: full

@@ -59,6 +59,52 @@ def add_msr_check(qa_name, shift, product_size, length, board_data, comments):
     return check_entry
 
 @anvil.server.callable
+def combine_rows_if_needed(row_period_start):
+    # Convert row_period_start to a datetime object if it's not already one
+    if not isinstance(row_period_start, datetime.datetime):
+        row_period_start = anvil.server.parse_date(row_period_start)
+
+    # Retrieve the specified row
+    specified_row = app_tables.msr_lumber_production_history.get(period_start=row_period_start)
+    if not specified_row:
+        return "Specified row not found"
+
+    # Fetch rows older than the specified row
+    older_rows = app_tables.msr_lumber_production_history.search(
+        tables.order_by("period_start", ascending=False),
+        period_start=q.less_than(row_period_start)
+    )
+
+    # Find the previous row
+    previous_row = None
+    for row in older_rows:
+        if row['period_start'] < row_period_start:
+            previous_row = row
+            break
+
+    if not previous_row:
+        return None
+
+    # Check for same product_size and time criteria
+    if specified_row['product_size'] == previous_row['product_size']:
+        if specified_row['period_start'] <= previous_row['period_end'] or \
+           (specified_row['period_start'] - previous_row['period_end']).total_seconds() <= 60:
+
+            # Combine rows
+            combined_piece_count = previous_row['piece_count'] + specified_row['piece_count']
+            combined_period_end = max(previous_row['period_end'], specified_row['period_end'])
+
+            # Update the previous row
+            previous_row['piece_count'] = combined_piece_count
+            previous_row['period_end'] = combined_period_end
+
+            # Delete the specified row
+            specified_row.delete()
+
+    return previous_row['period_start']
+
+
+@anvil.server.callable
 def add_piece_to_history(
     period_start,
     period_end,
@@ -67,6 +113,37 @@ def add_piece_to_history(
 ):
     product_size_row = app_tables.product_size.get(option=product_size)
     app_tables.msr_lumber_production_history.add_row(period_start=period_start, period_end=period_end, product_size=product_size_row, piece_count=piece_count)
+    # Now call the combine function with the period_start of the new row
+    combine_message = combine_rows_if_needed(period_start)
+
+    return combine_message
+
+@anvil.server.callable
+def get_newest_row():
+    # Fetch the newest row based on the period_start
+    newest_row = app_tables.msr_lumber_production_history.search(
+        tables.order_by("period_start", ascending=False))[:1]
+    return next(newest_row, None)
+
+@anvil.server.callable
+def get_next_oldest_row(current_period_end):
+    # Convert current_period_end to a datetime object if it's not already one
+    if not isinstance(current_period_end, datetime.datetime):
+        current_period_end = anvil.server.parse_date(current_period_end)
+
+    # Search for the next oldest row
+    next_rows = app_tables.msr_lumber_production_history.search(
+        tables.order_by("period_start", ascending=True),
+        period_start=q.greater_than(current_period_end)
+    )
+    
+    # Find the next row
+    next_row = None
+    for row in next_rows:
+        if row['period_start'] > current_period_end:
+            next_row = row
+            break
+    return next_row
 
 @anvil.server.callable
 def get_total_responses():

@@ -15,7 +15,7 @@ def check_admin():
 
 @anvil.server.callable
 @anvil.tables.in_transaction
-def add_msr_check(qa_name, shift, product_size, length, board_data, comments):
+def add_msr_check(qa_name, shift, product_size, length, board_data, comments, timestamp=None):
     # First, add board details to the `boards` table
     board_entries = []
     for board in board_data:
@@ -28,7 +28,8 @@ def add_msr_check(qa_name, shift, product_size, length, board_data, comments):
             fb_value=board['fb_value'] if fractured else None
         )
         board_entries.append(board_entry)
-    timestamp = datetime.datetime.now(datetime.timezone.utc)
+    if timestamp is None:
+        timestamp = datetime.datetime.now(datetime.timezone.utc)
     
     shift_row = app_tables.shift.get(option=shift)  # Assuming 'shifts' is the table name and 'option' is the column name
     if shift_row:

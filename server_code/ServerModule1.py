@@ -7,6 +7,32 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 import datetime
+
+
+@anvil.server.callable
+def compute_latest_msr_stats():
+    product_sizes = app_tables.product_size.search()
+    for product_size in product_sizes:
+        ### Skip 'None, No CUSUM' and None product sizes
+        product_size_string = product_size['option']
+        if product_size_string == None or product_size_string == 'None, No CUSUM':
+            continue
+        ### Find the latest row in msr_process_status_snapshots according to last_updated that has the same product_size
+        latest_snapshot = app_tables.msr_process_control_status_snapshots.search(
+            tables.order_by("last_updated", ascending=False),
+            product_size=product_size
+        )
+        ### Create a snapshot row if needed
+        if latest_snapshot and len(latest_snapshot) > 0:
+            latest_snapshot_row = latest_snapshot[0]
+        else:
+            latest_snapshot_row = app_tables.msr_process_control_status_snapshots.add_row(
+                product_size=product_size
+            )
+        if not latest_snapshot_row['last_updated']:
+            print('never updated')
+            latest_snapshot_row['last_updated'] = datetime.datetime.now()
+        #print(latest_snapshot_row['product_size']['option'])
     
 @anvil.server.callable
 def check_admin():
@@ -19,13 +45,6 @@ def add_msr_calibration_entry(completion_time, calibration_type, moe, outcome, s
     # Add a new calibration entry to the `msr_calibrations` table
     
     calibration_type_row = app_tables.calibration_type.get(option=calibration_type)
-    if not calibration_type_row:
-        # Optionally, create a new calibration type row if it doesn't exist
-        calibration_type_row = app_tables.calibration_type.add_row(option=calibration_type)
-
-    # Update the number of calibrations for this type
-    calibration_type_row['num_calibrations'] = (calibration_type_row['num_calibrations'] or 0) + 1
-
     shift_row = app_tables.shift.get(option=shift)
 
     # Add the calibration entry with a reference to the calibration_type_row
@@ -37,7 +56,6 @@ def add_msr_calibration_entry(completion_time, calibration_type, moe, outcome, s
         outcome_pass=(outcome=='Pass'),
         name=name
     )
-
     return calibration_entry
 
 
@@ -86,6 +104,7 @@ def add_msr_check(qa_name, shift, product_size, length, board_data, comments, ti
         comments=comments
     )
     return check_entry
+
 
 @anvil.server.callable
 def combine_rows_if_needed(row_period_start):

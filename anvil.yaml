@@ -20,8 +20,7 @@ startup: {type: form, module: Form1}
 package_name: MSR_QA_Check_Form
 allow_embedding: false
 name: MSR QA 5-piece CUSUM Check Form
-runtime_options: {version: 2, client_version: '3', server_version: python3-sandbox,
-  server_spec: null}
+runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
 metadata: {logo_img: '', title: MSR QA 5-piece Check Form, description: ''}
 startup_form: Form1
 native_deps: {head_html: '<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap"
@@ -220,45 +219,21 @@ db_schema:
     server: full
     columns:
     - name: latest_msr_check_considered
-      admin_ui: {width: 200, order: 0}
+      admin_ui: {order: -2, width: 200}
       type: link_single
       target: msr_checks
     - name: product_size
-      admin_ui: {order: -1, width: 136}
+      admin_ui: {order: -3, width: 136}
       type: link_single
       target: product_size
-    - name: overall_control_level
-      admin_ui: {order: 1, width: 157}
-      type: link_single
-      target: msr_control_level
-    - name: cusum_control_level
-      admin_ui: {order: 2, width: 184}
-      type: link_single
-      target: msr_control_level
-    - name: avg_moe_control_level
-      admin_ui: {order: 1.5, width: 174}
-      type: link_single
-      target: msr_control_level
-    - name: num_too_flexible_control_level
-      admin_ui: {order: 3, width: 236}
-      type: link_single
-      target: msr_control_level
-    - name: num_fractured_control_level
-      admin_ui: {order: 4, width: 220}
-      type: link_single
-      target: msr_control_level
-    - name: fracture_streak_control_level
-      admin_ui: {order: 5, width: 151}
-      type: link_single
-      target: msr_control_level
     - name: avg_moe
-      admin_ui: {order: 6, width: 96}
+      admin_ui: {order: -0.5, width: 96}
       type: number
     - name: cusum
-      admin_ui: {order: 7, width: 107}
+      admin_ui: {order: -0.25, width: 107}
       type: number
     - name: num_too_flexible
-      admin_ui: {order: 8, width: 150}
+      admin_ui: {order: -0.125, width: 150}
       type: number
     - name: num_fractured
       admin_ui: {order: 9, width: 125}
@@ -270,10 +245,17 @@ db_schema:
       admin_ui: {order: 13, width: 186}
       type: link_single
       target: msr_checks
-    - name: out_of_control_checks
-      admin_ui: {width: 200, order: 14}
+    - name: out_of_control_checks_performed
+      admin_ui: {order: 14, width: 288}
       type: link_multiple
       target: msr_checks
+    - name: overall_out_of_control_status
+      admin_ui: {order: 15, width: 297}
+      type: link_single
+      target: msr_control_level
+    - name: last_updated
+      admin_ui: {order: -2.5, width: 208}
+      type: datetime
     title: MSR_Process_Control_Status_Snapshots
 uplink_visible: true
 renamed: true

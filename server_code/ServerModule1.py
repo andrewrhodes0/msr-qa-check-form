@@ -8,8 +8,44 @@ from anvil.tables import app_tables
 import anvil.server
 import datetime
 
+TP_GIVEN_X_VALUE_FOR_2400_2E_MSR = 1950
+TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR = 316
+TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR = 542
+TP_GIVEN_W_MIN_MOE_FOR_2400_2E_MSR = 1.64
+TP_GIVEN_MAX_BELOW_MIN_MOE_FOR_2400_2E_MSR = 1
+TP_GIVEN_MAX_FRACTURES_FOR_2400_2E_MSR = 1
+TP_GIVEN_NUM_CUSUMS_FOR_OUT_OF_CONTROL_TEST = 6
+# How many consecutive 5 pieces CUSUM tests can we have with a fracture in each and remain "In Control"
+TP_GIVEN_MAX_FRACTURE_STREAK_FOR_2400_2E_MSR = 2 # 3 in a row == "Out-Of-Control"
+
+def remove_decimal_point_for_cusum(number):
+    return int(round(number, 2) * 100)
+
+def calc_cusum(board_moe_values, last_cusum):
+
+    total = 0
+    for value in board_moe_values:
+        total += remove_decimal_point_for_cusum(float(value))
+    average = total * 2
+    standard = last_cusum + TP_GIVEN_X_VALUE_FOR_2400_2E_MSR
+    cusum = standard - average
+
+    if cusum >= TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR:
+        cusum = TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR
+    elif cusum <= 0:
+        cusum = 0
+    return cusum
+
+def calc_fracture_streak(fracture_streak, board_fractures)
+    num_fractures = board_fractures.count(True)
+    if num_fractures > 0:
+        fracture_streak += 1
+    if num_fractures == 0:
+        fracture_streak = 0
+    return fracture_streak
 
 @anvil.server.callable
+@anvil.tables.in_transaction
 def compute_latest_msr_stats():
     product_sizes = app_tables.product_size.search()
     for product_size in product_sizes:
@@ -29,9 +65,45 @@ def compute_latest_msr_stats():
             latest_snapshot_row = app_tables.msr_process_control_status_snapshots.add_row(
                 product_size=product_size
             )
-        if not latest_snapshot_row['last_updated']:
-            print('never updated')
-            latest_snapshot_row['last_updated'] = datetime.datetime.now()
+        if not latest_snapshot_row['last_updated'] or not latest_snapshot_row['latest_msr_check_considered']:
+            ### New product_size, find the first msr check to start computations
+            given_product_msr_checks_ealiest_to_latest = app_tables.msr_checks.search(
+                tables.order_by("check_completed_datetime", ascending=True),
+                product_size=product_size
+            )
+            if not given_product_msr_checks_ealiest_to_latest or len(given_product_msr_checks_ealiest_to_latest) < 1:
+                ### No checks found, skip this product
+                continue
+            ### Didn't `continue` means we found a check to start with:
+            msr_check_to_consider = given_product_msr_checks_ealiest_to_latest[0]
+        else:
+            ### Situation normal, find the next MSR check after the latest_msr_check_considered datetime for the current product
+            last_update = latest_snapshot_row['latest_msr_check_considered']['check_completed_datetime']
+            msr_checks_after_last_update = app_tables.msr_checks.search(
+                tables.order_by("check_completed_datetime", ascending=True),
+                check_completed_datetime=q.greater_than(last_update),
+                product_size=product_size,
+            )
+            if not msr_checks_after_last_update or len(msr_checks_after_last_update) < 1:
+                ### No new checks found
+                continue
+            ### Didn't `continue` means we have a new check to work with for this product
+            msr_check_to_consider = msr_checks_after_last_update[0]
+            
+        ### Didn't `continue` so we have an msr check to consider
+        latest_snapshot_row['latest_msr_check_considered'] = msr_check_to_consider
+        latest_snapshot_row['last_updated'] = msr_check_to_consider['check_completed_datetime']
+        board_1 = msr_check_to_consider['board_1']
+        board_2 = msr_check_to_consider['board_2']
+        board_3 = msr_check_to_consider['board_3']
+        board_4 = msr_check_to_consider['board_4']
+        board_5 = msr_check_to_consider['board_5']
+        boards = [board_1, board_2, board_3, board_4, board_5]
+        avg_moe = sum([x['moe'] for x in boards]) / len(boards)
+        latest_snapshot_row['avg_moe'] = avg_moe
+        
+        latest_snapshot_row['cusum'] = calc_cusum(boards, 0)
+            
         #print(latest_snapshot_row['product_size']['option'])
     
 @anvil.server.callable

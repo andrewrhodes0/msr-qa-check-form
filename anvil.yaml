@@ -146,7 +146,7 @@ db_schema:
       type: link_single
       target: boards
     - name: check_completed_datetime
-      admin_ui: {width: 200}
+      admin_ui: {order: -1, width: 233}
       type: datetime
     - name: comments
       admin_ui: {width: 200}

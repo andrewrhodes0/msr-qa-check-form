@@ -228,23 +228,23 @@ db_schema:
       type: link_single
       target: product_size
     - name: overall_control_level
-      admin_ui: {order: 1, width: 117}
+      admin_ui: {order: 1, width: 157}
       type: link_single
       target: msr_control_level
     - name: cusum_control_level
-      admin_ui: {order: 2, width: 116}
+      admin_ui: {order: 2, width: 184}
       type: link_single
       target: msr_control_level
     - name: avg_moe_control_level
-      admin_ui: {order: 1.5, width: 121}
+      admin_ui: {order: 1.5, width: 174}
       type: link_single
       target: msr_control_level
     - name: num_too_flexible_control_level
-      admin_ui: {order: 3, width: 131}
+      admin_ui: {order: 3, width: 236}
       type: link_single
       target: msr_control_level
     - name: num_fractured_control_level
-      admin_ui: {order: 4, width: 133}
+      admin_ui: {order: 4, width: 220}
       type: link_single
       target: msr_control_level
     - name: fracture_streak_control_level
@@ -266,15 +266,13 @@ db_schema:
     - name: fractured_streak
       admin_ui: {order: 10, width: 137}
       type: number
-    - name: doing_out_of_control_test
-      admin_ui: {width: 200, order: 11}
-      type: bool
-    - name: out_of_control_just_started
-      admin_ui: {order: 12, width: 203}
-      type: bool
     - name: msr_check_causing_out_of_control
       admin_ui: {order: 13, width: 186}
       type: link_single
+      target: msr_checks
+    - name: out_of_control_checks
+      admin_ui: {width: 200, order: 14}
+      type: link_multiple
       target: msr_checks
     title: MSR_Process_Control_Status_Snapshots
 uplink_visible: true

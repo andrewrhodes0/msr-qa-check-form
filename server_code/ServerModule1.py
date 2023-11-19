@@ -7,33 +7,8 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 import datetime
+from business_logic import calculate_non_sequential_stats, calculate_sequential_stats
 
-TP_GIVEN_X_VALUE_FOR_2400_2E_MSR = 1950
-TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR = 316
-TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR = 542
-TP_GIVEN_W_MIN_MOE_FOR_2400_2E_MSR = 1.64
-TP_GIVEN_MAX_BELOW_MIN_MOE_FOR_2400_2E_MSR = 1
-TP_GIVEN_MAX_FRACTURES_FOR_2400_2E_MSR = 1
-TP_GIVEN_NUM_CUSUMS_FOR_OUT_OF_CONTROL_TEST = 6
-# How many consecutive 5 pieces CUSUM tests can we have with a fracture in each and remain "In Control"
-TP_GIVEN_MAX_FRACTURE_STREAK_FOR_2400_2E_MSR = 2 # 3 in a row == "Out-Of-Control"
-
-def remove_decimal_point_for_cusum(number):
-    return int(round(number, 2) * 100)
-
-def calc_cusum(board_moe_values, last_cusum):
-    total = 0
-    for value in board_moe_values:
-        total += remove_decimal_point_for_cusum(float(value))
-    average = total * 2
-    standard = last_cusum + TP_GIVEN_X_VALUE_FOR_2400_2E_MSR
-    cusum = standard - average
-
-    if cusum >= TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR:
-        cusum = TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR
-    elif cusum <= 0:
-        cusum = 0
-    return cusum
 
 @anvil.server.callable
 @anvil.tables.in_transaction
@@ -93,20 +68,16 @@ def compute_latest_msr_stats():
         columns = [f'board_{i}' for i in range(1, 6)]
         boards = [msr_check_to_consider[column] for column in columns]
         
-        ### Handle the stats that do not need previous data to be computed
-        num_fractured = [x['fractured'] for x in boards].count(True)
+        ### Calculate non-sequential stats
+        num_fractured, avg_moe, num_too_flexible = calculate_non_sequential_stats(boards)
         latest_snapshot_row['num_fractured'] = num_fractured
-        latest_snapshot_row['avg_moe'] = sum([x['moe'] for x in boards]) / len(boards)
-        latest_snapshot_row['num_too_flexible'] = sum([x['moe'] < TP_GIVEN_W_MIN_MOE_FOR_2400_2E_MSR for x in boards])
-
-        ### Handle the stats that need previous data to be computed
-        fracture_streak = snapshot_row_original_vals['fractured_streak']
-        if num_fractured > 0:
-            fracture_streak += 1
-        if num_fractured == 0:
-            fracture_streak = 0
+        latest_snapshot_row['avg_moe'] = avg_moe
+        latest_snapshot_row['num_too_flexible'] = num_too_flexible
+    
+        ### Calculate sequential stats
+        fracture_streak, cusum = calculate_sequential_stats(boards, snapshot_row_original_vals['fractured_streak'], snapshot_row_original_vals['cusum'])
         latest_snapshot_row['fractured_streak'] = fracture_streak
-        latest_snapshot_row['cusum'] = calc_cusum([x['moe'] for x in boards], snapshot_row_original_vals['cusum'])
+        latest_snapshot_row['cusum'] = cusum
 
         
     

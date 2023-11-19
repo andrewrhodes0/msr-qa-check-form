@@ -256,6 +256,9 @@ db_schema:
     - name: last_updated
       admin_ui: {order: -2.5, width: 208}
       type: datetime
+    - name: extra
+      admin_ui: {order: -0.1875, width: 88}
+      type: number
     title: MSR_Process_Control_Status_Snapshots
 uplink_visible: true
 renamed: true

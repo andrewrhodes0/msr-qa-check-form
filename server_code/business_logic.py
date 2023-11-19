@@ -1,12 +1,3 @@
-import anvil.google.auth, anvil.google.drive, anvil.google.mail
-from anvil.google.drive import app_files
-import anvil.users
-import anvil.email
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
-import anvil.server
-
 TP_GIVEN_X_VALUE_FOR_2400_2E_MSR = 1950
 TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR = 316
 TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR = 542
@@ -30,7 +21,8 @@ def calc_cusum(board_moe_values, last_cusum):
 
     if cusum >= TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR:
         cusum = TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR
-    elif cusum <= 0:
+    extra = cusum
+    if cusum <= 0:
         cusum = 0
     return cusum
 
@@ -47,16 +39,3 @@ def calculate_sequential_stats(boards, previous_fracture_streak, previous_cusum)
     fracture_streak = previous_fracture_streak + 1 if num_fractured > 0 else 0
     cusum = calc_cusum([x['moe'] for x in boards], previous_cusum)
     return fracture_streak, cusum
-    
-# This is a server module. It runs on the Anvil server,
-# rather than in the user's browser.
-#
-# To allow anvil.server.call() to call functions here, we mark
-# them with @anvil.server.callable.
-# Here is an example - you can replace it with your own:
-#
-# @anvil.server.callable
-# def say_hello(name):
-#   print("Hello, " + name + "!")
-#   return 42
-#

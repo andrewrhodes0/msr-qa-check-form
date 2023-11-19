@@ -227,7 +227,7 @@ db_schema:
       type: link_single
       target: product_size
     - name: avg_moe
-      admin_ui: {order: -0.5, width: 96}
+      admin_ui: {order: -0.5, width: 125}
       type: number
     - name: cusum
       admin_ui: {order: -0.25, width: 107}

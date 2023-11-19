@@ -10,7 +10,6 @@ import datetime
 
 import business_logic as bl
 
-
 @anvil.server.callable
 @anvil.tables.in_transaction
 def compute_latest_msr_stats():

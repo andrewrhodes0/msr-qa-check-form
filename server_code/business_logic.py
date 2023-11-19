@@ -1,3 +1,4 @@
+CUSUM_WARNING_LEVEL = 100
 TP_GIVEN_X_VALUE_FOR_2400_2E_MSR = 1950
 TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR = 316
 TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR = 542
@@ -18,24 +19,35 @@ def calc_cusum(board_moe_values, last_cusum):
     average = total * 2
     standard = last_cusum + TP_GIVEN_X_VALUE_FOR_2400_2E_MSR
     cusum = standard - average
-
     if cusum >= TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR:
         cusum = TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR
     extra = cusum
     if cusum <= 0:
         cusum = 0
-    return cusum
+    return (cusum, extra)
 
 # Function to calculate non-sequential statistics
 def calculate_non_sequential_stats(boards):
-    num_fractured = [x['fractured'] for x in boards].count(True)
-    avg_moe = sum([x['moe'] for x in boards]) / len(boards)
-    num_too_flexible = sum([x['moe'] < TP_GIVEN_W_MIN_MOE_FOR_2400_2E_MSR for x in boards])
-    return num_fractured, avg_moe, num_too_flexible
+    stats = {
+        'num_fractured': [x['fractured'] for x in boards].count(True),
+        'avg_moe': sum([x['moe'] for x in boards]) / len(boards),
+        'num_too_flexible': sum([x['moe'] < TP_GIVEN_W_MIN_MOE_FOR_2400_2E_MSR for x in boards])
+    }
+    return stats
 
 # Function to calculate sequential statistics
 def calculate_sequential_stats(boards, previous_fracture_streak, previous_cusum):
-    num_fractured, _, _ = calculate_non_sequential_stats(boards)
+    num_fractured = [x['fractured'] for x in boards].count(True)
     fracture_streak = previous_fracture_streak + 1 if num_fractured > 0 else 0
     cusum = calc_cusum([x['moe'] for x in boards], previous_cusum)
-    return fracture_streak, cusum
+    stats = {
+        'fractured_streak': fracture_streak,
+        'cusum': cusum[0],
+        'extra': cusum[1]
+    }
+    return stats
+
+def decide_current_control_level(process_snapshot_row):
+    if process_snapshot_row['cusum'] >= CUSUM_WARNING_LEVEL:
+        process_snapshot_row['']
+        

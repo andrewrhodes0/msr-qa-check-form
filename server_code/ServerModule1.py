@@ -8,7 +8,7 @@ from anvil.tables import app_tables
 import anvil.server
 import datetime
 
-from business_logic import calculate_non_sequential_stats, calculate_sequential_stats
+import business_logic as bl
 
 
 @anvil.server.callable
@@ -70,15 +70,20 @@ def compute_latest_msr_stats():
         boards = [msr_check_to_consider[column] for column in columns]
         
         ### Calculate non-sequential stats
-        num_fractured, avg_moe, num_too_flexible = calculate_non_sequential_stats(boards)
-        latest_snapshot_row['num_fractured'] = num_fractured
-        latest_snapshot_row['avg_moe'] = avg_moe
-        latest_snapshot_row['num_too_flexible'] = num_too_flexible
+        non_seq_stats = bl.calculate_non_sequential_stats(boards)
+        for key, value in non_seq_stats.items():
+            latest_snapshot_row[key] = value
     
         ### Calculate sequential stats
-        fracture_streak, cusum = calculate_sequential_stats(boards, snapshot_row_original_vals['fractured_streak'], snapshot_row_original_vals['cusum'])
-        latest_snapshot_row['fractured_streak'] = fracture_streak
-        latest_snapshot_row['cusum'] = cusum
+        seq_stats = bl.calculate_sequential_stats(
+            boards,
+            snapshot_row_original_vals['fractured_streak'],
+            snapshot_row_original_vals['cusum'])
+        for key, value in seq_stats.items():
+            latest_snapshot_row[key] = value
+
+        ### Use these stats to decide if we are "In Control"
+        bl.decide_current_control_level(latest_snapshot_row)
 
         
     

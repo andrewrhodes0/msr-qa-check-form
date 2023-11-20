@@ -69,8 +69,8 @@ db_schema:
     client: none
     server: full
     columns:
-    - name: option
-      admin_ui: {width: 200, order: 0}
+    - name: status
+      admin_ui: {order: 0, width: 200}
       type: string
     title: MSR_Control_Level
   users:
@@ -242,15 +242,15 @@ db_schema:
       admin_ui: {order: 10, width: 137}
       type: number
     - name: msr_check_causing_out_of_control
-      admin_ui: {order: 13, width: 186}
+      admin_ui: {order: 13, width: 159}
       type: link_single
       target: msr_checks
     - name: out_of_control_checks_performed
-      admin_ui: {order: 14, width: 288}
+      admin_ui: {order: 14, width: 173}
       type: link_multiple
       target: msr_checks
     - name: overall_out_of_control_status
-      admin_ui: {order: 15, width: 297}
+      admin_ui: {order: 15, width: 185}
       type: link_single
       target: msr_control_level
     - name: last_updated

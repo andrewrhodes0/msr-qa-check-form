@@ -9,6 +9,60 @@ import anvil.server
 import datetime
 
 import business_logic as bl
+from business_logic import *
+
+def update_product_msr_stats(status_row, msr_check_to_consider):
+    snapshot_row_original_vals = dict(status_row)
+    
+    status_row['latest_msr_check_considered'] = msr_check_to_consider
+    status_row['last_updated'] = msr_check_to_consider['check_completed_datetime']
+
+    ### Create a list of boards to work with
+    columns = [f'board_{i}' for i in range(1, 6)]
+    boards = [msr_check_to_consider[column] for column in columns]
+    
+    ### Calculate non-sequential stats
+    non_seq_stats = bl.calculate_non_sequential_stats(boards)
+    status_row.update(**non_seq_stats) ## dict unpacking
+
+    ### Calculate sequential stats
+    seq_stats = bl.calculate_sequential_stats(
+        boards,
+        snapshot_row_original_vals['fractured_streak'],
+        snapshot_row_original_vals['cusum'],
+        status_row['overall_out_of_control_status'] == out_of_control_row,
+    )
+    status_row.update(**seq_stats) ## dict unpacking
+
+    ### Use these stats to decide if we are "In Control"
+    if status_row['overall_out_of_control_status'] in (in_control_row, leaving_control_row):
+        if any([
+            status_row['cusum'] >= CUSUM_WARNING_LEVEL,
+            status_row['num_too_flexible'] == TP_GIVEN_MAX_BELOW_MIN_MOE_FOR_2400_2E_MSR,
+            status_row['num_fractured'] == TP_GIVEN_MAX_FRACTURES_FOR_2400_2E_MSR,
+            status_row['fractured_streak'] == TP_GIVEN_MAX_FRACTURE_STREAK_FOR_2400_2E_MSR
+        ]):
+            status_row['overall_out_of_control_status'] = leaving_control_row
+        elif any([
+            status_row['cusum'] >= TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR,
+            status_row['num_too_flexible'] > TP_GIVEN_MAX_BELOW_MIN_MOE_FOR_2400_2E_MSR,
+            status_row['num_fractured'] > TP_GIVEN_MAX_FRACTURES_FOR_2400_2E_MSR,
+            status_row['fractured_streak'] > TP_GIVEN_MAX_FRACTURE_STREAK_FOR_2400_2E_MSR
+        ]):
+            status_row['overall_out_of_control_status'] = out_of_control_row
+            status_row['msr_check_causing_out_of_control'] = msr_check_to_consider
+        else:
+            status_row['overall_out_of_control_status'] = in_control_row
+    elif status_row['overall_out_of_control_status'] == out_of_control_row:
+        status_row['out_of_control_checks_performed'].append(msr_check_to_consider)
+        if len(status_row['out_of_control_checks_performed']) % TP_GIVEN_NUM_CUSUMS_FOR_OUT_OF_CONTROL_TEST == 0:
+            if is_control_regained(status_row['out_of_control_checks_performed']):
+                status_row['overall_out_of_control_status'] = in_control_row
+                new_row_data = dict(status_row)
+                new_row_data['overall_out_of_control_status'] = in_control_row
+                status_row = app_tables.msr_process_control_status_snapshots.add_row(**new_row_data)
+    return status_row
+    
 
 @anvil.server.callable
 @anvil.tables.in_transaction
@@ -26,12 +80,12 @@ def compute_latest_msr_stats():
         )
         ### Create a snapshot row if needed
         if latest_snapshot and len(latest_snapshot) > 0:
-            latest_snapshot_row = latest_snapshot[0]
+            status_row = latest_snapshot[0]
         else:
-            latest_snapshot_row = app_tables.msr_process_control_status_snapshots.add_row(
+            status_row = app_tables.msr_process_control_status_snapshots.add_row(
                 product_size=product_size
             )
-        if not latest_snapshot_row['last_updated'] or not latest_snapshot_row['latest_msr_check_considered']:
+        if not status_row['last_updated'] or not status_row['latest_msr_check_considered']:
             ### New product_size, find the first msr check to start computations
             given_product_msr_checks_ealiest_to_latest = app_tables.msr_checks.search(
                 tables.order_by("check_completed_datetime", ascending=True),
@@ -42,11 +96,12 @@ def compute_latest_msr_stats():
                 continue
             ### Didn't `continue` means we found a check to start with:
             msr_check_to_consider = given_product_msr_checks_ealiest_to_latest[0]
-            latest_snapshot_row['cusum'] = 0
-            latest_snapshot_row['fractured_streak'] = 0
+            status_row['cusum'] = 0
+            status_row['fractured_streak'] = 0
+            status_row['overall_out_of_control_status'] = in_control_row
         else:
             ### Situation normal, find the next MSR check after the latest_msr_check_considered datetime for the current product
-            last_update = latest_snapshot_row['latest_msr_check_considered']['check_completed_datetime']
+            last_update = status_row['latest_msr_check_considered']['check_completed_datetime']
             msr_checks_after_last_update = app_tables.msr_checks.search(
                 tables.order_by("check_completed_datetime", ascending=True),
                 check_completed_datetime=q.greater_than(last_update),
@@ -57,32 +112,15 @@ def compute_latest_msr_stats():
                 continue
             ### Didn't `continue` means we have a new check to work with for this product
             msr_check_to_consider = msr_checks_after_last_update[0]
-            
+        
         ### Didn't `continue` so we have an msr check to consider
-        snapshot_row_original_vals = dict(latest_snapshot_row)
-        
-        latest_snapshot_row['latest_msr_check_considered'] = msr_check_to_consider
-        latest_snapshot_row['last_updated'] = msr_check_to_consider['check_completed_datetime']
+        status_row = update_product_msr_stats(status_row, msr_check_to_consider)
 
-        ### Create a list of boards to work with
-        columns = [f'board_{i}' for i in range(1, 6)]
-        boards = [msr_check_to_consider[column] for column in columns]
-        
-        ### Calculate non-sequential stats
-        non_seq_stats = bl.calculate_non_sequential_stats(boards)
-        for key, value in non_seq_stats.items():
-            latest_snapshot_row[key] = value
-    
-        ### Calculate sequential stats
-        seq_stats = bl.calculate_sequential_stats(
-            boards,
-            snapshot_row_original_vals['fractured_streak'],
-            snapshot_row_original_vals['cusum'])
-        for key, value in seq_stats.items():
-            latest_snapshot_row[key] = value
 
-        ### Use these stats to decide if we are "In Control"
-        bl.decide_current_control_level(latest_snapshot_row)
+                    
+
+            
+            
 
 
 @anvil.server.callable
@@ -129,7 +167,7 @@ def add_msr_check(qa_name, shift, product_size, length, board_data, comments, ti
     if timestamp is None:
         timestamp = datetime.datetime.now(datetime.timezone.utc)
     
-    shift_row = app_tables.shift.get(option=shift)  # Assuming 'shifts' is the table name and 'option' is the column name
+    shift_row = app_tables.shift.get(option=shift)
     if shift_row:
         shift_row['num_checks'] = (shift_row['num_checks'] or 0) + 1
 
@@ -165,7 +203,8 @@ def combine_rows_if_needed(row_period_start):
         row_period_start = anvil.server.parse_date(row_period_start)
 
     # Retrieve the specified row
-    specified_row = app_tables.msr_lumber_production_history.get(period_start=row_period_start)
+    specified_row = app_tables.msr_lumber_production_history.get(
+        period_start=row_period_start)
     if not specified_row:
         return "Specified row not found"
 
@@ -212,7 +251,11 @@ def add_piece_to_history(
     piece_count
 ):
     product_size_row = app_tables.product_size.get(option=product_size)
-    app_tables.msr_lumber_production_history.add_row(period_start=period_start, period_end=period_end, product_size=product_size_row, piece_count=piece_count)
+    app_tables.msr_lumber_production_history.add_row(
+        period_start=period_start,
+        period_end=period_end,
+        product_size=product_size_row,
+        piece_count=piece_count)
     # Now call the combine function with the period_start of the new row
     combine_message = combine_rows_if_needed(period_start)
 

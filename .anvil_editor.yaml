@@ -6,7 +6,7 @@ unique_ids:
     Survey: '1614960961076640221305728.538'
   modules: {}
   server_modules:
-    ServerModule1: 34MDHM63KE5HM23ESOJVR2HAXJXBUFTH
+    ServerModule: 34MDHM63KE5HM23ESOJVR2HAXJXBUFTH
     business_logic: '1700405517932528671218726.1866'
   assets:
     standard-page.html: WWBACPS33RBNCCXA2PK6WRJAU7Y52FG6

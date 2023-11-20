@@ -1,3 +1,5 @@
+from anvil.tables import app_tables
+
 CUSUM_WARNING_LEVEL = 100
 TP_GIVEN_X_VALUE_FOR_2400_2E_MSR = 1950
 TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR = 316
@@ -9,18 +11,32 @@ TP_GIVEN_NUM_CUSUMS_FOR_OUT_OF_CONTROL_TEST = 6
 # How many consecutive 5 pieces CUSUM tests can we have with a fracture in each and remain "In Control"
 TP_GIVEN_MAX_FRACTURE_STREAK_FOR_2400_2E_MSR = 2 # 3 in a row == "Out-Of-Control"
 
+def get_control_level_row(status):
+    row = app_tables.msr_control_level.get(status=status)
+    if row is None:
+        raise ValueError(f"No row found for status: {status}")
+    return row
+# Global variables for caching
+in_control_row = get_control_level_row("In Control")
+leaving_control_row = get_control_level_row("Leaving Control")
+out_of_control_row = get_control_level_row("Out-Of-Control")
+
 def remove_decimal_point_for_cusum(number):
     return int(round(number, 2) * 100)
 
-def calc_cusum(board_moe_values, last_cusum):
+def calc_cusum(board_moe_values, last_cusum, out_of_control):
     total = 0
     for value in board_moe_values:
         total += remove_decimal_point_for_cusum(float(value))
     average = total * 2
     standard = last_cusum + TP_GIVEN_X_VALUE_FOR_2400_2E_MSR
     cusum = standard - average
-    if cusum >= TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR:
-        cusum = TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR
+    if out_of_control:
+        if cusum >= TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR:
+            cusum = TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR
+    else:
+        if cusum >= TP_GIVEN_Y_VALUE_FOR_2400_2E_MSR:
+            cusum = TP_GIVEN_Z_VALUE_FOR_2400_2E_MSR
     extra = cusum
     if cusum <= 0:
         cusum = 0
@@ -47,7 +63,19 @@ def calculate_sequential_stats(boards, previous_fracture_streak, previous_cusum)
     }
     return stats
 
-def decide_current_control_level(process_snapshot_row):
-    if process_snapshot_row['cusum'] >= CUSUM_WARNING_LEVEL:
-        process_snapshot_row['']
-        
+def is_control_regained(msr_checks):
+    assert len(msr_checks) % TP_GIVEN_NUM_CUSUMS_FOR_OUT_OF_CONTROL_TEST == 0
+    considered_checks = cusum_stats[-TP_GIVEN_NUM_CUSUMS_FOR_OUT_OF_CONTROL_TEST:] # grab the last bunch
+    cusum_good = False
+    too_flexible_count = 0
+    fracture_count = 0
+    for msr_check in considered_checks:
+        if msr_check['cusum'] <= TP_GIVEN_OUT_OF_CONTROL_MIN_CUSUM:
+            cusum_good = True
+        too_flexible_count += msr_check['num_too_flexible']
+        fracture_count += msr_check['num_fractured']
+    
+    flex_good = too_flexible_count <= TP_GIVEN_OUT_OF_CONTROL_TEST_MAX_TOO_FLEX_COUNT
+    fractures_good = fracture_count <= TP_GIVEN_OUT_OF_CONTROL_TEST_MAX_FRACTURE_COUNT
+
+    return cusum_good and flex_good and fractures_good

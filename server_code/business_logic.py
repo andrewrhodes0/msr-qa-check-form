@@ -52,10 +52,10 @@ def calculate_non_sequential_stats(boards):
     return stats
 
 # Function to calculate sequential statistics
-def calculate_sequential_stats(boards, previous_fracture_streak, previous_cusum):
+def calculate_sequential_stats(boards, previous_fracture_streak, previous_cusum, out_of_control):
     num_fractured = [x['fractured'] for x in boards].count(True)
     fracture_streak = previous_fracture_streak + 1 if num_fractured > 0 else 0
-    cusum = calc_cusum([x['moe'] for x in boards], previous_cusum)
+    cusum = calc_cusum([x['moe'] for x in boards], previous_cusum, out_of_control)
     stats = {
         'fractured_streak': fracture_streak,
         'cusum': cusum[0],

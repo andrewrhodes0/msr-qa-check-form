@@ -11,8 +11,9 @@ import datetime
 import business_logic as bl
 from business_logic import *
 
+@anvil.server.callable
 def update_product_msr_stats(status_row, msr_check_to_consider):
-    snapshot_row_original_vals = dict(status_row)
+    status_row_original_vals = dict(status_row)
     
     status_row['latest_msr_check_considered'] = msr_check_to_consider
     status_row['last_updated'] = msr_check_to_consider['check_completed_datetime']
@@ -28,13 +29,13 @@ def update_product_msr_stats(status_row, msr_check_to_consider):
     ### Calculate sequential stats
     seq_stats = bl.calculate_sequential_stats(
         boards,
-        snapshot_row_original_vals['fractured_streak'],
-        snapshot_row_original_vals['cusum'],
+        status_row_original_vals['fractured_streak'],
+        status_row_original_vals['cusum'],
         status_row['overall_out_of_control_status'] == out_of_control_row,
     )
     status_row.update(**seq_stats) ## dict unpacking
 
-    ### Use these stats to decide if we are "In Control"
+    ### Use these stats to decide if we are 'In Control'
     if status_row['overall_out_of_control_status'] in (in_control_row, leaving_control_row):
         if any([
             status_row['cusum'] >= CUSUM_WARNING_LEVEL,
@@ -60,7 +61,23 @@ def update_product_msr_stats(status_row, msr_check_to_consider):
                 status_row['overall_out_of_control_status'] = in_control_row
                 new_row_data = dict(status_row)
                 new_row_data['overall_out_of_control_status'] = in_control_row
+                new_row_data['last_updated'] += datetime.timedelta(seconds=1)
                 status_row = app_tables.msr_process_control_status_snapshots.add_row(**new_row_data)
+    print('Point A')
+    previous_status_search = app_tables.msr_process_control_status_snapshots.search(
+        tables.order_by('last_updated', ascending=False),
+        last_updated=q.less_than(status_row['last_updated']),
+        product_size=status_row['product_size'],
+        )
+    if 
+    previous_status_row = previous_status_search[0]
+    print('Point B')
+    time_between = status_row['last_updated'] - previous_status_row['last_updated']
+    print('Point CD')
+    if time_between > datetime.timedelta(days=5):
+        new_row_data = dict(status_row)
+        new_row_data['last_updated'] += datetime.timedelta(seconds=1)
+        status_row = app_tables.msr_process_control_status_snapshots.add_row(**new_row_data)
     return status_row
     
 
@@ -75,7 +92,7 @@ def compute_latest_msr_stats():
             continue
         ### Find the latest row in msr_process_status_snapshots according to last_updated that has the same product_size
         latest_snapshot = app_tables.msr_process_control_status_snapshots.search(
-            tables.order_by("last_updated", ascending=False),
+            tables.order_by('last_updated', ascending=False),
             product_size=product_size
         )
         ### Create a snapshot row if needed
@@ -88,7 +105,7 @@ def compute_latest_msr_stats():
         if not status_row['last_updated'] or not status_row['latest_msr_check_considered']:
             ### New product_size, find the first msr check to start computations
             given_product_msr_checks_ealiest_to_latest = app_tables.msr_checks.search(
-                tables.order_by("check_completed_datetime", ascending=True),
+                tables.order_by('check_completed_datetime', ascending=True),
                 product_size=product_size
             )
             if not given_product_msr_checks_ealiest_to_latest or len(given_product_msr_checks_ealiest_to_latest) < 1:
@@ -103,7 +120,7 @@ def compute_latest_msr_stats():
             ### Situation normal, find the next MSR check after the latest_msr_check_considered datetime for the current product
             last_update = status_row['latest_msr_check_considered']['check_completed_datetime']
             msr_checks_after_last_update = app_tables.msr_checks.search(
-                tables.order_by("check_completed_datetime", ascending=True),
+                tables.order_by('check_completed_datetime', ascending=True),
                 check_completed_datetime=q.greater_than(last_update),
                 product_size=product_size,
             )
@@ -156,7 +173,7 @@ def add_msr_check(qa_name, shift, product_size, length, board_data, comments, ti
     board_entries = []
     for board in board_data:
         # Assuming `board` is a dictionary with keys: 'moisture', 'moe', 'fractured', 'fb_value'
-        fractured = (board['fractured'] == "Yes")
+        fractured = (board['fractured'] == 'Yes')
         board_entry = app_tables.boards.add_row(
             moisture=board['moisture'],
             moe=board['moe'],
@@ -206,11 +223,11 @@ def combine_rows_if_needed(row_period_start):
     specified_row = app_tables.msr_lumber_production_history.get(
         period_start=row_period_start)
     if not specified_row:
-        return "Specified row not found"
+        return 'Specified row not found'
 
     # Fetch rows older than the specified row
     older_rows = app_tables.msr_lumber_production_history.search(
-        tables.order_by("period_start", ascending=False),
+        tables.order_by('period_start', ascending=False),
         period_start=q.less_than(row_period_start)
     )
 
@@ -266,7 +283,7 @@ def add_piece_to_history(
 def get_newest_row():
     # Fetch the newest row based on the period_start
     newest_row = app_tables.msr_lumber_production_history.search(
-        tables.order_by("period_start", ascending=False))[:1]
+        tables.order_by('period_start', ascending=False))[:1]
     return next(newest_row, None)
 
 
@@ -278,7 +295,7 @@ def get_next_oldest_row(current_period_end):
 
     # Search for the next oldest row
     next_rows = app_tables.msr_lumber_production_history.search(
-        tables.order_by("period_start", ascending=True),
+        tables.order_by('period_start', ascending=True),
         period_start=q.greater_than(current_period_end)
     )
     

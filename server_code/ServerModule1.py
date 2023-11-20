@@ -84,12 +84,12 @@ def compute_latest_msr_stats():
         ### Use these stats to decide if we are "In Control"
         bl.decide_current_control_level(latest_snapshot_row)
 
-        
-    
+
 @anvil.server.callable
 def check_admin():
     if anvil.users.get_user():
         return True
+
 
 @anvil.server.callable
 @anvil.tables.in_transaction
@@ -218,12 +218,14 @@ def add_piece_to_history(
 
     return combine_message
 
+
 @anvil.server.callable
 def get_newest_row():
     # Fetch the newest row based on the period_start
     newest_row = app_tables.msr_lumber_production_history.search(
         tables.order_by("period_start", ascending=False))[:1]
     return next(newest_row, None)
+
 
 @anvil.server.callable
 def get_next_oldest_row(current_period_end):
@@ -245,9 +247,11 @@ def get_next_oldest_row(current_period_end):
             break
     return next_row
 
+
 @anvil.server.callable
 def get_total_responses():
     return len(app_tables.msr_checks.search())
+
 
 @anvil.server.callable
 def get_tables():
@@ -256,10 +260,8 @@ def get_tables():
     length = app_tables.length.search()
     return [shift, product_size, length]
 
+
 @anvil.server.background_task
 def hello_world():
     print('hello world')
     return True
-
-
-
